@@ -1,0 +1,125 @@
+Router#show running-config 
+Building configuration...
+
+Current configuration : 1804 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+ipv6 unicast-routing
+!
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2911/K9 sn FTX1524Q4J4-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ ip address 192.168.10.194 255.255.255.252
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 1 md5 TechNova123
+ duplex auto
+ speed auto
+ ipv6 address 2001:DB8:ACAD:102::2/64
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1.40
+ encapsulation dot1Q 40
+ ip address 192.168.10.161 255.255.255.240
+ ip helper-address 192.168.10.162
+!
+interface GigabitEthernet0/1.99
+ description MANAGEMENT-GATEWAY
+ encapsulation dot1Q 99
+ ip address 192.168.10.177 255.255.255.248
+!
+interface GigabitEthernet0/1.999
+ encapsulation dot1Q 999 native
+ no ip address
+!
+interface GigabitEthernet0/2
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2.30
+ encapsulation dot1Q 30
+ ip address 192.168.10.97 255.255.255.224
+ ip helper-address 192.168.10.162
+ ipv6 address 2001:DB8:ACAD:30::1/64
+!
+interface GigabitEthernet0/2.999
+ encapsulation dot1Q 999 native
+ no ip address
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ router-id 3.3.3.3
+ log-adjacency-changes
+ passive-interface GigabitEthernet0/1.99
+ network 192.168.10.192 0.0.0.3 area 0
+ network 192.168.10.96 0.0.0.31 area 2
+ network 192.168.10.160 0.0.0.15 area 2
+ network 192.168.10.176 0.0.0.7 area 2
+!
+ip classless
+!
+ip flow-export version 9
+!
+ipv6 route 2001:DB8:ACAD:10::/64 2001:DB8:ACAD:102::1
+ipv6 route 2001:DB8:ACAD:20::/64 2001:DB8:ACAD:102::1
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
